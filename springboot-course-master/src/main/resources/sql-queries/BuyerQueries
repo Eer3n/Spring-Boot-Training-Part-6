@@ -1,0 +1,17 @@
+
+
+INSERT INTO public.spring_buyer(
+	id, age, backup_mail_address, gender, image_url, is_banned, mail_address, name, password, surname, username)
+	VALUES (1, 21, 'eliferen@gmail.com', 0, 'no-image', 'false', 'elif.eren@hotmail.com', 'Elif', 'password', 'Eren', 'Luci');
+
+INSERT INTO public.spring_buyer(
+    id, age, backup_mail_address, gender, image_url, is_banned, mail_address, name, password, surname, username)
+    VALUES (2, 26, 'egedemirbas@gmail.com', 0, 'no-image', 'false', 'ege.demirbas@hotmail.com', 'Ege', 'SecretPassword', 'Demirbas', 'Egerion');
+
+INSERT INTO public.spring_buyer(
+    id, age, backup_mail_address, gender, image_url, is_banned, mail_address, name, password, surname, username)
+    VALUES (3, 28, 'irfancimen@gmail.com', 0, 'no-image', 'false', 'irfan.cimen@hotmail.com', 'Irfan', 'kuskas', 'Cimen', 'Loreplex');
+
+INSERT INTO public.spring_buyer(
+    id, age, backup_mail_address, gender, image_url, is_banned, mail_address, name, password, surname, username)
+    VALUES (4, 35, 'bahadirmemis@gmail.com', 0, 'no-image', 'false', 'bahadir.memis@hotmail.com', 'Bahadır', 'password', 'Memiş', 'BMemis');

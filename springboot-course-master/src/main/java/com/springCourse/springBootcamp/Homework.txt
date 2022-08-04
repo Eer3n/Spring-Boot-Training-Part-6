@@ -1,0 +1,36 @@
+Question 1.0
+    - Complete the "Seller" entity properties. Both, dao, service, exception, controller... you name It! (+)
+
+Question 2.1
+    as a Product Owner, we'll demand a new development from you that will change the pre-existing structure as such:
+        - now, when a new product was getting created, It should first be approved in order to be displayed in market.
+        we should have an enum list called ProductApproval which holds the state of given product. (+)
+
+        ProductApproval states (+)
+            - InApproved
+            - Approved
+            - Rejected
+            - CatalogRejected
+            - WaitingForApproval
+
+        you should then implement this ProductApproval to Product Entity as new field. (+)
+
+        - Newly created products by default should have ProductApproval state "WaitingForApproval". (?)
+
+Question 2.2
+    - create a method for updating product approval states with given ProductApproval state.
+
+Question 3.1
+    - Architectural decision was made, and thus we decided to implement a structure that will assing a "score" to sellers.
+      When sellers total score decrease It to say "-100" It should be revoked and cannot sell any more products until further inspection was made.
+
+      - create an enum that will hold the state of Seller called SellerStatus (+)
+
+      SellerStatus (+)
+        - Active
+        - Inactive
+        - Banned
+
+      - write an endpoint that will update the score of given seller. (+-)
+      - create a method that will set the seller's status to banned if Its score is less than equal to -100. (+)
+        - if sellers status is now banned, then Its all products must be set to "deleted state"!!! (?)
