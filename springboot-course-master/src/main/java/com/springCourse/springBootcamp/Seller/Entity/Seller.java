@@ -2,10 +2,9 @@ package com.springCourse.springBootcamp.Seller.Entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.springCourse.springBootcamp.Product.Entity.Product;
-import com.springCourse.springBootcamp.Seller.Score.SellerScore;
+import com.springCourse.springBootcamp.Seller.Enum.SellerStatus;
 import com.springCourse.springBootcamp.User.Entity.User;
 import com.springCourse.springBootcamp.User.Enum.Countries;
-import com.springCourse.springBootcamp.User.Enum.SellerStatus;
 import com.springCourse.springBootcamp.User.Enum.UserStatus;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +14,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,7 +25,9 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Seller extends User implements SellerScore {
+public class Seller extends User implements Serializable {
+
+    public static final int revokeLimit = -100;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +41,9 @@ public class Seller extends User implements SellerScore {
     private int totalScore;
     private Countries countriesThatSells;
     private UserStatus userStatus;
+
+    @Enumerated(EnumType.ORDINAL)
+    private SellerStatus sellerStatus;
 
     @BatchSize(size = 10)
     @JsonManagedReference
@@ -57,14 +62,5 @@ public class Seller extends User implements SellerScore {
     @Override
     public int hashCode() {
         return getClass().hashCode();
-    }
-
-
-    @Override
-    public SellerStatus deleteScore() {
-        if (totalScore <= -100){
-            return SellerStatus.banned;
-        }
-        return SellerStatus.valueOf("Deleted state!");
     }
 }

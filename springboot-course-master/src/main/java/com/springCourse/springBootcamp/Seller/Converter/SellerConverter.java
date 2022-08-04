@@ -19,9 +19,6 @@ public class SellerConverter {
         seller.setCountriesThatSells(seller.getCountriesThatSells());
         seller.setUserStatus(seller.getUserStatus());
 
-
         return seller;
     }
-
-
 }

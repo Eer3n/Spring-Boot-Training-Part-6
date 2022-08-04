@@ -1,25 +1,16 @@
 package com.springCourse.springBootcamp.Product.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.springCourse.springBootcamp.Basket.Entity.Basket;
 import com.springCourse.springBootcamp.Buyer.Entity.Buyer;
+import com.springCourse.springBootcamp.Product.Enum.ProductApproval;
 import com.springCourse.springBootcamp.Seller.Entity.Seller;
-import com.springCourse.springBootcamp.User.Enum.Gender;
-import com.springCourse.springBootcamp.User.Enum.ProductApproval;
-import com.springCourse.springBootcamp.User.Enum.SellerStatus;
+import com.springCourse.springBootcamp.Seller.Enum.SellerStatus;
 import lombok.Data;
-import lombok.ToString;
-import org.hibernate.Hibernate;
-import org.hibernate.annotations.BatchSize;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "SPRING_PRODUCT", schema = "public")
@@ -56,16 +47,11 @@ public class Product implements Serializable, Cloneable {
     private double discountPrice;
     private Boolean isDeleted;
 
-    @BatchSize(size= 4)
-    @JsonManagedReference
-    @OneToMany(orphanRemoval = true, fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "product")
-    @ToString.Exclude
-    private List<Product> productApprovalList = new ArrayList<>();
-
     @Enumerated(EnumType.ORDINAL)
     private ProductApproval productApproval;
-    private SellerStatus sellerStatus;
 
+    @Enumerated(EnumType.ORDINAL)
+    private SellerStatus sellerStatus;
 
     @Override
     public Product clone() {
@@ -77,9 +63,4 @@ public class Product implements Serializable, Cloneable {
             throw new AssertionError();
         }
     }
-
-    ProductApproval newProduct = ProductApproval.waitingForApproval;
-
-
-
 }

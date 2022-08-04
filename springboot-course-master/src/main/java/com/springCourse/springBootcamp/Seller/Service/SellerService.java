@@ -1,13 +1,15 @@
 package com.springCourse.springBootcamp.Seller.Service;
 
-import com.springCourse.springBootcamp.Buyer.Entity.Buyer;
+import com.springCourse.springBootcamp.Product.Entity.Product;
+import com.springCourse.springBootcamp.Product.Enum.ProductApproval;
+import com.springCourse.springBootcamp.Product.Service.ProductService;
 import com.springCourse.springBootcamp.Seller.Converter.SellerConverter;
 import com.springCourse.springBootcamp.Seller.Dao.SellerDao;
 import com.springCourse.springBootcamp.Seller.Dto.SellerDto;
 import com.springCourse.springBootcamp.Seller.Entity.Seller;
+import com.springCourse.springBootcamp.Seller.Enum.SellerStatus;
 import com.springCourse.springBootcamp.User.Enum.Countries;
 import com.springCourse.springBootcamp.User.Enum.RestrictedCountries;
-import com.springCourse.springBootcamp.User.Enum.SellerStatus;
 import com.springCourse.springBootcamp.User.Enum.UserStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +23,7 @@ public class SellerService {
 
     private final SellerDao sellerDao;
     private final SellerConverter sellerConverter;
-
+    private final ProductService productService;
 
     public List<Seller> findAll() {
         return sellerDao.findAll();
@@ -52,20 +54,16 @@ public class SellerService {
         Countries countries = seller.getCountriesThatSells();
         return restrictedCountriesList.contains(countries.toString()) ? seller : null;
     }
+
     public Seller createNewSeller(Seller seller) {
         return sellerDao.save(seller);
     }
 
-    public Seller createNewFromDto(SellerDto sellerDto){
+    public Seller createNewFromDto(SellerDto sellerDto) {
         Seller seller = sellerConverter.convertFromDto(sellerDto);
         sellerDao.save(seller);
         return seller;
     }
-
-    public SellerStatus isScoreUpdated(SellerStatus sellerStatus ){
-        return sellerStatus.valueOf("Banned");
-    }
-
 
     public void deleteGivenSeller(Seller seller) {
         sellerDao.delete(seller);
@@ -75,5 +73,16 @@ public class SellerService {
         return sellerDao.findByIsBanned(isBanned);
     }
 
+    public void checkAndRevokeSeller(Seller seller) {
+        if (Seller.revokeLimit <= seller.getTotalScore()) {
+            seller.setSellerStatus(SellerStatus.banned);
 
+            List<Product> productList = seller.getProductList();
+            productList.forEach(product -> {
+                product.setProductApproval(ProductApproval.softDeleted);
+            });
+            seller.setProductList(productList);
+        }
+        sellerDao.save(seller);
+    }
 }

@@ -2,7 +2,6 @@ package com.springCourse.springBootcamp.Seller.Controller;
 
 import com.springCourse.springBootcamp.Seller.Entity.Seller;
 import com.springCourse.springBootcamp.Seller.Service.SellerService;
-import com.springCourse.springBootcamp.User.Enum.SellerStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,8 +39,5 @@ public class SellerController {
     public void delete(@RequestBody Seller seller) {
         sellerService.deleteGivenSeller(seller);
     }
-
-    @PostMapping("/update")
-    public void update(@RequestBody SellerStatus sellerStatus){sellerService.isScoreUpdated(sellerStatus);}
 
 }

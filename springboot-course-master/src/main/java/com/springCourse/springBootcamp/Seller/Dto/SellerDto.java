@@ -16,5 +16,4 @@ public class SellerDto {
     private int totalScore;
     private Countries countriesThatSells;
     private UserStatus userStatus;
-
 }

@@ -1,6 +1,4 @@
-package com.springCourse.springBootcamp.User.Enum;
-
-import com.springCourse.springBootcamp.Seller.Entity.Seller;
+package com.springCourse.springBootcamp.Seller.Enum;
 
 public enum SellerStatus {
     active("Active"),

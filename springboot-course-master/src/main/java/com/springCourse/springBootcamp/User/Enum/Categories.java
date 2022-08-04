@@ -15,9 +15,12 @@ public enum Categories {
 
     private final String categoryName;
 
-    Categories(String name){ categoryName = name;}
+    Categories(String name) {
+        categoryName = name;
+    }
 
-    public String toString(){return categoryName;}
-
-
+    @Override
+    public String toString() {
+        return categoryName;
+    }
 }

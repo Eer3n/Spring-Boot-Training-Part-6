@@ -4,13 +4,11 @@ import com.springCourse.springBootcamp.Product.Converter.ProductConverter;
 import com.springCourse.springBootcamp.Product.Dao.ProductDao;
 import com.springCourse.springBootcamp.Product.Dto.ProductDto;
 import com.springCourse.springBootcamp.Product.Entity.Product;
+import com.springCourse.springBootcamp.Product.Enum.ProductApproval;
 import com.springCourse.springBootcamp.Seller.Entity.Seller;
-import com.springCourse.springBootcamp.User.Enum.ProductApproval;
-import com.springCourse.springBootcamp.User.Enum.SellerStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -51,14 +49,11 @@ public class ProductService {
         return product;
     }
 
-    public Product isNewProduct(Product product) {
-        List<String> productApprovalList = List.of(Arrays.toString(ProductApproval.class.getEnumConstants()));
-        ProductApproval productApproval = product.getProductApproval();
-        return productApprovalList.contains(productApproval.toString()) ? product : null;
+    public void setProductStatusToWaitingForApproval(Product product) {
+        product.setProductApproval(ProductApproval.waitingForApproval);
     }
 
-
-    public void updateStatus(ProductApproval productApproval) {
-        productDao.setUpdateStatus(SellerStatus.valueOf("Active"), "waitingForApproval");
+    public void update(Product product){
+        productDao.save(product);
     }
 }

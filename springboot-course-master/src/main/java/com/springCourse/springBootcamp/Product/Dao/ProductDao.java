@@ -2,10 +2,9 @@ package com.springCourse.springBootcamp.Product.Dao;
 
 import com.springCourse.springBootcamp.Product.Entity.Product;
 import com.springCourse.springBootcamp.Seller.Entity.Seller;
-import com.springCourse.springBootcamp.User.Enum.SellerStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -32,8 +31,5 @@ public interface ProductDao extends JpaRepository<Product, Long> {
     @Query("delete from Product product where product.Id=:productId")
     void deleteById(@Param("productId") Long productId);
 
-
-    @Modifying
-    @Query("update Product product set product.sellerStatus=:sellerStatus where product.productApproval=:productApproval")
-    void setUpdateStatus(@Param("sellerStatus") SellerStatus sellerStatus, @Param("productApproval") String productApproval);
+    Product save(Product product);
 }

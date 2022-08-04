@@ -1,9 +1,9 @@
 package com.springCourse.springBootcamp.Product.Controller;
 
+import com.springCourse.springBootcamp.Product.Dto.ProductDto;
 import com.springCourse.springBootcamp.Product.Entity.Product;
 import com.springCourse.springBootcamp.Product.Exception.ProductNotFoundException;
 import com.springCourse.springBootcamp.Product.Service.ProductService;
-import com.springCourse.springBootcamp.User.Enum.ProductApproval;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,8 +36,12 @@ public class ProductController {
     }
 
     @PostMapping("/create")
-    public void save(@RequestBody Product product) {
-        productService.createNewProduct(product);
+    public void save(@RequestBody ProductDto productDto) {
+        Product product = productService.createNewFromDto(productDto);
+        if (product == null) {
+            throw new ProductNotFoundException("product not found!");
+        }
+        productService.setProductStatusToWaitingForApproval(product);
     }
 
     @PostMapping("/delete")
@@ -45,9 +49,5 @@ public class ProductController {
         productService.deleteGivenProduct(product);
     }
 
-    @PutMapping("/updateStatus/{productApproval}")
-    public void updateStatus(@PathVariable("productApproval") ProductApproval productApproval){
-        productService.updateStatus(productApproval);
 
-    }
 }
